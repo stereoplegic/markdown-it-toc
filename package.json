@@ -11,8 +11,9 @@
     "url": "https://github.com/samchrisinger/markdown-it-toc"
   },
   "keywords": [
-    "markdown",
-    "markdown-it"
+      "markdown",
+      "markdown-it",
+      "markdown-it-plugin"
   ],
   "author": "Sam Chrisinger",
   "license": "MIT",
