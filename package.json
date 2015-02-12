@@ -1,0 +1,23 @@
+{
+  "name": "markdown-it-toc",
+  "version": "1.0.0",
+  "description": "Adds syntax for an automatically generated table of contents to markdown-it markdown parser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samchrisinger/markdown-it-toc"
+  },
+  "keywords": [
+    "markdown",
+    "markdown-it"
+  ],
+  "author": "Sam Chrisinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samchrisinger/markdown-it-toc/issues"
+  },
+  "homepage": "https://github.com/samchrisinger/markdown-it-toc"
+}
