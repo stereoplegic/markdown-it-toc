@@ -1,15 +1,23 @@
-// Process +++TOC[|Title]+++
+// Process @[toc](|Title)
 
 'use strict';
 
 module.exports = function(md) {
 
-    var TOC_REGEXP = /^(\+\+\+)TOC.+(\+\+\+)$/;
-    var TOC_LABEL_REGEXP = /\[(.+)\]/;
+    var TOC_REGEXP = /^@\[toc\](\(.+\))?$/i;
     var TOC_DEFAULT = "Table of Contents";
 
     function toc(state, silent) {	
-	if (!TOC_REGEXP.test(state.src)){
+	// trivial rejections
+	if (state.src.charCodeAt(state.pos) !== 0x40/* @ */) {
+            return false;
+        }
+        if (state.src.charCodeAt(state.pos + 1) !== 0x5B/* [ */) {
+            return false;
+        }
+
+	var match = TOC_REGEXP.exec(state.src);
+	if (!match || match.length < 1){
 	    return false;
 	}
         if (silent) {// don't run any pairs in validation mode
@@ -20,12 +28,9 @@ module.exports = function(md) {
             type: 'toc_open',
             level: state.level++
         });
-	var label = TOC_LABEL_REGEXP.exec(state.src);
-	if (!label){
-	    label = TOC_DEFAULT;
-	}
-	else{
-	    label = label.pop()
+	var label = TOC_DEFAULT;
+	if (match.length > 1){
+	    label = match.pop()
 	}
 	state.push({
 	    type: 'toc_body',
