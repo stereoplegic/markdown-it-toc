@@ -6,6 +6,7 @@ module.exports = function(md) {
 
     var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?$/im;
     var TOC_DEFAULT = "Table of Contents";
+    var headings = [];
 
     function toc(state, silent) {	
 	// trivial rejections
@@ -86,7 +87,6 @@ module.exports = function(md) {
 	return '<h3>' + tokens[index].content + '</h3>' + list.join('') + Array(indent+1).join('</ul>');
     }    
     
-    var headings = [];
     var last = 0;
     var ck_heading = function(state, a, b){
 	var search = state.tokens.slice(last);
@@ -95,7 +95,7 @@ module.exports = function(md) {
 		var heading = search.slice(index-1, index)[0];
 		headings.push({
 		    level: token.hLevel,
-		    anchor: heading.content.split(' ').join('_') + (last + index),
+		    anchor: heading.content.split(' ').join('_') + (last + index - 2),
 		    content: heading.content
 		});
 	    }
@@ -104,7 +104,9 @@ module.exports = function(md) {
 	return false;
     };
 
-    md.block.ruler.after('heading', 'ck_heading', ck_heading);
+    //md.block.ruler.push('ck_heading', ck_heading);
+    //md.inline.ruler.push('ck_heading', ck_heading);
+    md.core.ruler.push('ck_heading', ck_heading);
     md.inline.ruler.after('emphasis', 'toc', toc);
 };
 
