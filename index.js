@@ -4,7 +4,7 @@
 
 module.exports = function(md) {
 
-    var TOC_REGEXP = /^@\[toc\](\(.+\))?$/i;
+    var TOC_REGEXP = /^@\[toc\]\((?:\s+)?(\S+?)(?:\s+)?\)?$/im;
     var TOC_DEFAULT = "Table of Contents";
 
     function toc(state, silent) {	
@@ -50,6 +50,7 @@ module.exports = function(md) {
 
     md.renderer.rules.heading_open = function(tokens, index) {
         var level = tokens[index].hLevel;
+	/// BUG HERE
         var anchor = tokens[index + 1].content.split(' ').join('_');
         return '<h' + level + '><a id="' + anchor + '"></a>';
     };
