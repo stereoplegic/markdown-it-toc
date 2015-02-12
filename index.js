@@ -4,7 +4,7 @@
 
 module.exports = function(md) {
 
-    var TOC_REGEXP = /^@\[toc\]\((?:\s+)?(\S+?)(?:\s+)?\)?$/im;
+    var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?$/im;
     var TOC_DEFAULT = "Table of Contents";
 
     function toc(state, silent) {	
@@ -16,7 +16,7 @@ module.exports = function(md) {
             return false;
         }
 
-	var match = TOC_REGEXP.exec(state.src);
+	var match = TOC_REGEXP.exec(state.src).filter(function(m){ return m; });
 	if (!match || match.length < 1){
 	    return false;
 	}
