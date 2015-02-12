@@ -51,7 +51,7 @@ module.exports = function(md) {
     md.renderer.rules.heading_open = function(tokens, index) {
         var level = tokens[index].hLevel;
 	/// BUG HERE
-        var anchor = tokens[index + 1].content.split(' ').join('_');
+        var anchor = tokens[index + 1].content.split(' ').join('_') + index;
         return '<h' + level + '><a id="' + anchor + '"></a>';
     };
     md.renderer.rules.toc_open = function(tokens, index){
@@ -95,7 +95,7 @@ module.exports = function(md) {
 		var heading = search.slice(index-1, index)[0];
 		headings.push({
 		    level: token.hLevel,
-		    anchor: heading.content.split(' ').join('_'),
+		    anchor: heading.content.split(' ').join('_') + (last + index),
 		    content: heading.content
 		});
 	    }
