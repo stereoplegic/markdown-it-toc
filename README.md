@@ -26,7 +26,7 @@ The end results looks like:
 
 ```html
 <p>
-     <h3> {{Title}} </h3>
+     <h3>Title</h3>
      <ul>
 	<li><a href="...">Heading 1</a></li>
 	...
