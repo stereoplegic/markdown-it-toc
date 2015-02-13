@@ -2,12 +2,12 @@ Coverage. TOC
 .
 @[toc](Title)
 .
-<p><div class="_toc"><h3>Title</h3></div></p>
+<p><h3>Title</h3></p>
 .
 .
 @[toc]
 .
-<p><div class="_toc"><h3>Table of Contents</h3></div></p>
+<p><h3>Table of Contents</h3></p>
 .
 .
 @[toc](Title)
@@ -22,7 +22,7 @@ Some content
 
 ## SubHeading
 .
-<p><div class="_toc"><h3>Title</h3><ul><li><a href="#Heading_1_2">Heading 1</a></li><li><a href="#Heading_2_6">Heading 2</a></li><ul><li><a href="#SubHeading_10">SubHeading</a></li></ul></ul></div></p>
+<p><h3>Title</h3><ul><li><a href="#Heading_1_2">Heading 1</a></li><li><a href="#Heading_2_6">Heading 2</a></li><ul><li><a href="#SubHeading_10">SubHeading</a></li></ul></ul></p>
 <h1><a id="Heading_1_2"></a>Heading 1</h1>
 <p>Some Content</p>
 <h1><a id="Heading_2_6"></a>Heading 2</h1>

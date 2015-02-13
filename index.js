@@ -65,11 +65,11 @@ module.exports = function(md) {
 	}
     };
     md.renderer.rules.toc_open = function(tokens, index){
-	return '<div class="_toc">';
+	return ''
 
     };
     md.renderer.rules.toc_close = function(tokens, index){
-	return '</div>';
+	return ''
     };
     md.renderer.rules.toc_body = function(tokens, index){	
 	var indent = 0;

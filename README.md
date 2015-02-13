@@ -25,12 +25,22 @@ Adding this tag with add anchors to each ```<h[n]>``` tag on your document, and 
 The end results looks like:
 
 ```html
-<div class="toc">
+<p>
      <h3> {{Title}} </h3>
      <ul>
 	<li><a href="...">Heading 1</a></li>
 	...
 	... 
      </ul> 
-</div>
+</p>
+...
+...
+<h1><a href="..."></a>Heading 1</h1>
+```
+
+### Testing
+
+To run the tests use:
+```bash
+make test
 ```
