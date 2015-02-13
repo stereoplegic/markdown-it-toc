@@ -1,0 +1,60 @@
+Coverage. TOC
+.
+@[toc](Title)
+.
+<div class="_toc"><h3>Title</h3></div>
+.
+.
+# Heading 1
+
+Some Content
+
+# Heading 2
+
+# SubHeading
+.
+<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
+.
+.
+@[youtube]( x )
+.
+<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
+.
+.
+@[youtube](
+x )
+.
+<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
+.
+.
+@[youtube](
+x
+ )
+.
+<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
+.
+.
+@[]youtube()
+.
+<p>@[]youtube()</p>
+.
+.
+@[youtube]()
+.
+<p></p>
+.
+.
+@[yourtube](x)
+.
+<p>@<a href="x">yourtube</a></p>
+.
+.
+@[(youtube]
+.
+<p>@[(youtube]</p>
+.
+.
+@[toc]()
+.
+<p>@<a href="">toc</a></p>
+.

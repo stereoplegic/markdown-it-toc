@@ -17,8 +17,12 @@ module.exports = function(md) {
             return false;
         }
 
-	var match = TOC_REGEXP.exec(state.src).filter(function(m){ return m; });
-	if (!match || match.length < 1){
+	var match = TOC_REGEXP.exec(state.src);
+	if (!match){
+	    return false;
+	}
+	match = match.filter(function(m){ return m; });
+	if (match.length < 1){
 	    return false;
 	}
         if (silent) {// don't run any pairs in validation mode
@@ -51,9 +55,14 @@ module.exports = function(md) {
 
     md.renderer.rules.heading_open = function(tokens, index) {
         var level = tokens[index].hLevel;
-	/// BUG HERE
-        var anchor = tokens[index + 1].content.split(' ').join('_') + index;
-        return '<h' + level + '><a id="' + anchor + '"></a>';
+	var label = tokens[index + 1];
+	if (label.type === 'inline'){
+            var anchor = label.content.split(' ').join('_') + '_' + label.lines[0];
+	    return '<h' + level + '><a id="' + anchor + '"></a>';
+	}
+	else{
+	    return '</h1>';
+	}
     };
     md.renderer.rules.toc_open = function(tokens, index){
 	return '<div class="_toc">';
@@ -91,16 +100,18 @@ module.exports = function(md) {
     var ck_heading = function(state, a, b){
 	var search = state.tokens.slice(last);
 	search.map(function(token, index){
-	    if (token.type === 'heading_close'){
+	    if (token.type === 'heading_close' && index >= 1){
 		var heading = search.slice(index-1, index)[0];
-		headings.push({
-		    level: token.hLevel,
-		    anchor: heading.content.split(' ').join('_') + (last + index - 2),
-		    content: heading.content
-		});
+		if (heading.type === 'inline'){
+		    headings.push({
+			level: token.hLevel,
+			anchor: heading.content.split(' ').join('_') + '_' + heading.lines[0],
+			content: heading.content
+		    });
+		}
 	    }
 	});
-	last = state.tokens.length;
+	last = state.tokens.length - 1;
 	return false;
     };
 
