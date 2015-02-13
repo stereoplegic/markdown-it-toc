@@ -2,59 +2,31 @@ Coverage. TOC
 .
 @[toc](Title)
 .
-<div class="_toc"><h3>Title</h3></div>
+<p><div class="_toc"><h3>Title</h3></div></p>
 .
 .
+@[toc]
+.
+<p><div class="_toc"><h3>Table of Contents</h3></div></p>
+.
+.
+@[toc](Title)
+
 # Heading 1
 
 Some Content
 
 # Heading 2
 
-# SubHeading
+Some content
+
+## SubHeading
 .
-<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
+<p><div class="_toc"><h3>Title</h3><ul><li><a href="#Heading_1_2">Heading 1</a></li><li><a href="#Heading_2_6">Heading 2</a></li><ul><li><a href="#SubHeading_10">SubHeading</a></li></ul></ul></div></p>
+<h1><a id="Heading_1_2"></a>Heading 1</h1>
+<p>Some Content</p>
+<h1><a id="Heading_2_6"></a>Heading 2</h1>
+<p>Some content</p>
+<h2><a id="SubHeading_10"></a>SubHeading</h2>
 .
-.
-@[youtube]( x )
-.
-<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
-.
-.
-@[youtube](
-x )
-.
-<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
-.
-.
-@[youtube](
-x
- )
-.
-<p><iframe id="ytplayer" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/x" frameborder="0"/></p>
-.
-.
-@[]youtube()
-.
-<p>@[]youtube()</p>
-.
-.
-@[youtube]()
-.
-<p></p>
-.
-.
-@[yourtube](x)
-.
-<p>@<a href="x">yourtube</a></p>
-.
-.
-@[(youtube]
-.
-<p>@[(youtube]</p>
-.
-.
-@[toc]()
-.
-<p>@<a href="">toc</a></p>
-.
+ 
