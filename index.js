@@ -6,7 +6,7 @@ module.exports = function(md) {
 
     var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?$/im;
     var TOC_DEFAULT = "Table of Contents";
-    var headings = [];
+    var gstate;
 
     function toc(state, silent) {	
 	// trivial rejections
@@ -64,14 +64,36 @@ module.exports = function(md) {
 	    return '</h1>';
 	}
     };
+
     md.renderer.rules.toc_open = function(tokens, index){
 	return ''
-
     };
+
     md.renderer.rules.toc_close = function(tokens, index){
 	return ''
     };
+
     md.renderer.rules.toc_body = function(tokens, index){	
+	// Wanted to avoid linear search through tokens here, 
+	// but this seems the only reliable way to identify headings
+	var headings = [];
+	var gtokens = gstate.tokens;
+	var size = gtokens.length;
+	for (var i = 0; i < size; i++){
+	    if (gtokens[i].type !== 'heading_close'){
+		continue;
+	    }
+	    var token = gtokens[i];
+	    var heading = gtokens[i-1];
+	    if (heading.type === 'inline'){
+		headings.push({
+		    level: token.hLevel,
+		    anchor: heading.content.split(' ').join('_') + '_' + heading.lines[0],
+		    content: heading.content
+		});
+	    }		
+	}
+
 	var indent = 0;
 	var list = headings.map(function(heading){
 	    var res = [];
@@ -95,29 +117,27 @@ module.exports = function(md) {
 
 	return '<h3>' + tokens[index].content + '</h3>' + list.join('') + Array(indent+1).join('</ul>');
     }    
-    
+
+    /*
     var last = 0;
     var ck_heading = function(state, a, b){
 	var search = state.tokens.slice(last);
 	search.map(function(token, index){
 	    if (token.type === 'heading_close' && index >= 1){
 		var heading = search.slice(index-1, index)[0];
-		if (heading.type === 'inline'){
-		    headings.push({
-			level: token.hLevel,
-			anchor: heading.content.split(' ').join('_') + '_' + heading.lines[0],
-			content: heading.content
-		    });
-		}
 	    }
 	});
 	last = state.tokens.length - 1;
 	return false;
     };
+    */
 
     //md.block.ruler.push('ck_heading', ck_heading);
     //md.inline.ruler.push('ck_heading', ck_heading);
-    md.core.ruler.push('ck_heading', ck_heading);
+    //md.core.ruler.push('ck_heading', ck_heading);
+    md.core.ruler.push('grabState', function(state){
+	gstate = state;
+    });
     md.inline.ruler.after('emphasis', 'toc', toc);
 };
 
