@@ -5,7 +5,7 @@
 module.exports = function(md) {
 
     var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?$/im;
-    var TOC_DEFAULT = "Table of Contents";
+    var TOC_DEFAULT = 'Table of Contents';
     var gstate;
 
     function toc(state, silent) {
@@ -49,8 +49,15 @@ module.exports = function(md) {
             level: --state.level
         });
 
-        var pos = state.pos + state.posMax + 1;
-        state.pos = pos;
+	var offset = 0;
+	var newline = state.src.indexOf('\n');
+	if (newline !== -1){
+	    offset = state.pos + newline;
+	}
+	else{
+	    offset = state.pos + state.posMax + 1;
+	}
+	state.pos = offset;
 
         return true;
     }
