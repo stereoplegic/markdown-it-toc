@@ -4,11 +4,19 @@
 
 module.exports = function(md) {
 
-    var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?$/im;
+    var TOC_REGEXP = /^@\[toc\](?:\((?:\s+)?([^\)]+)(?:\s+)?\)?)?(?:\s+?)?$/im;
     var TOC_DEFAULT = 'Table of Contents';
     var gstate;
 
     function toc(state, silent) {
+        while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('@[toc]')){
+            if (state.tokens.slice(-1)[0].type === 'softbreak'){
+                state.src = state.src.split('\n').slice(1).join('\n');                
+                state.pos = 0;
+            }
+        }
+
+
         // trivial rejections
         if (state.src.charCodeAt(state.pos) !== 0x40 /* @ */ ) {
             return false;
