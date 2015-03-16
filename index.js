@@ -11,7 +11,7 @@ module.exports = function(md) {
     function toc(state, silent) {
         while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('@[toc]')){
             if (state.tokens.slice(-1)[0].type === 'softbreak'){
-                state.src = state.src.split('\n').slice(1).join('\n');                
+                state.src = state.src.split('\n').slice(1).join('\n');
                 state.pos = 0;
             }
         }
@@ -69,12 +69,15 @@ module.exports = function(md) {
 
         return true;
     }
+    var makeSafe = function(label){
+        return label.replace(/[^\w\s]/gi, '').split(' ').join('_');
+    };
 
     md.renderer.rules.heading_open = function(tokens, index) {
         var level = tokens[index].hLevel;
         var label = tokens[index + 1];
         if (label.type === 'inline') {
-            var anchor = label.content.split(' ').join('_') + '_' + label.lines[0];
+            var anchor = makeSafe(label.content) + '_' + label.lines[0];
             return '<h' + level + '><a id="' + anchor + '"></a>';
         } else {
             return '</h1>';
@@ -104,7 +107,7 @@ module.exports = function(md) {
             if (heading.type === 'inline') {
                 headings.push({
                     level: token.hLevel,
-                    anchor: heading.content.split(' ').join('_') + '_' + heading.lines[0],
+                    anchor: makeSafe(heading.content) + '_' + heading.lines[0],
                     content: heading.content
                 });
             }
