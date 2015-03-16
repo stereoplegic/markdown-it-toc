@@ -9,8 +9,8 @@ module.exports = function(md) {
     var gstate;
 
     function toc(state, silent) {
-        while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('@[toc]')){
-            if (state.tokens.slice(-1)[0].type === 'softbreak'){
+        while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('@[toc]')) {
+            if (state.tokens.slice(-1)[0].type === 'softbreak') {
                 state.src = state.src.split('\n').slice(1).join('\n');
                 state.pos = 0;
             }
@@ -57,19 +57,18 @@ module.exports = function(md) {
             level: --state.level
         });
 
-	var offset = 0;
-	var newline = state.src.indexOf('\n');
-	if (newline !== -1){
-	    offset = state.pos + newline;
-	}
-	else{
-	    offset = state.pos + state.posMax + 1;
-	}
-	state.pos = offset;
+        var offset = 0;
+        var newline = state.src.indexOf('\n');
+        if (newline !== -1) {
+            offset = state.pos + newline;
+        } else {
+            offset = state.pos + state.posMax + 1;
+        }
+        state.pos = offset;
 
         return true;
     }
-    var makeSafe = function(label){
+    var makeSafe = function(label) {
         return label.replace(/[^\w\s]/gi, '').split(' ').join('_');
     };
 
