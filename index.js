@@ -15,7 +15,7 @@ module.exports = function(md) {
                 state.pos = 0;
             }
         }
-
+        var token;
 
         // trivial rejections
         if (state.src.charCodeAt(state.pos) !== 0x40 /* @ */ ) {
@@ -39,23 +39,17 @@ module.exports = function(md) {
             return false;
         }
 
-        state.push({
-            type: 'toc_open',
-            level: state.level++
-        });
+        token = state.push('toc_open', 'toc', 1);
+        token.markup = '@[toc]';
+
+        token = state.push('toc_body', '', 0);
         var label = TOC_DEFAULT;
         if (match.length > 1) {
             label = match.pop();
         }
-        state.push({
-            type: 'toc_body',
-            level: state.level,
-            content: label
-        });
-        state.push({
-            type: 'toc_close',
-            level: --state.level
-        });
+        token.content = label;
+
+        token = state.push('toc_close', 'toc', -1);
 
         var offset = 0;
         var newline = state.src.indexOf('\n');
@@ -73,11 +67,11 @@ module.exports = function(md) {
     };
 
     md.renderer.rules.heading_open = function(tokens, index) {
-        var level = tokens[index].hLevel;
+        var level = tokens[index].tag;
         var label = tokens[index + 1];
         if (label.type === 'inline') {
-            var anchor = makeSafe(label.content) + '_' + label.lines[0];
-            return '<h' + level + '><a id="' + anchor + '"></a>';
+            var anchor = makeSafe(label.content) + '_' + label.map[0];
+            return '<' + level + '><a id="' + anchor + '"></a>';
         } else {
             return '</h1>';
         }
@@ -105,8 +99,8 @@ module.exports = function(md) {
             var heading = gtokens[i - 1];
             if (heading.type === 'inline') {
                 headings.push({
-                    level: token.hLevel,
-                    anchor: makeSafe(heading.content) + '_' + heading.lines[0],
+                    level: +token.tag.substr(1, 1),
+                    anchor: makeSafe(heading.content) + '_' + heading.map[0],
                     content: heading.content
                 });
             }
