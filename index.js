@@ -43,7 +43,7 @@ module.exports = function(md) {
         token.markup = '@[toc]';
 
         token = state.push('toc_body', '', 0);
-        var label = TOC_DEFAULT;
+        var label = state.env.tocHeader || TOC_DEFAULT;
         if (match.length > 1) {
             label = match.pop();
         }
